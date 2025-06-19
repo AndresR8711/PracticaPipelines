@@ -1,0 +1,36 @@
+name: Suma con condiciones
+
+on:
+  push:
+    branches:
+      - 'test/**'
+
+env:
+  NUMERO1: ${{ vars.NUMERO1 }}
+  NUMERO2: ${{ vars.NUMERO2 }}
+
+jobs:
+  sumar_numeros:
+    name: Sumar dos números
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ejecutar suma
+        run: |
+          echo "Sumando $NUMERO1 + $NUMERO2"
+          RESULTADO=$((NUMERO1 + NUMERO2))
+          echo "Resultado=$RESULTADO" >> $GITHUB_ENV
+
+  evaluar_resultado:
+    name: Evaluar resultado de la suma
+    needs: sumar_numeros
+    runs-on: ubuntu-latest
+    steps:
+      - name: Mostrar mensaje según resultado
+        run: |
+          if [ "$RESULTADO" -gt 10 ]; then
+            echo "✅ El resultado es mayor a 10: $RESULTADO"
+          else
+            echo "ℹ️ El resultado es menor o igual a 10: $RESULTADO"
+          fi
+        env:
+          RESULTADO: ${{ env.RESULTADO }}

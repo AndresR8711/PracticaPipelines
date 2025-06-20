@@ -27,8 +27,8 @@ jobs:
     steps:
       - name: Mostrar mensaje según resultado
         run: |
-          if [ "$RESULTADO" -gt 10 ]; then
-            echo "✅ El resultado es mayor a 10: $RESULTADO"
+          if [ "$RESULTADO" -gt 11 ]; then
+            echo "✅ El resultado es mayor a 11: $RESULTADO"
           else
             echo "ℹ️ El resultado es menor o igual a 10: $RESULTADO"
           fi

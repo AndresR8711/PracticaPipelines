@@ -1,0 +1,55 @@
+name: Etapas de la vida
+
+on:
+  workflow_dispatch:
+	  	  
+#edad: 28 años, 9 meses, 10 días
+#etapa_de_vida: adultez
+inputs:
+  anio_nacimiento: 1996
+  dia_nacimiento: 10
+  mes_nacimiento: 9
+    
+env:
+    LIM_NINEZ: ${{ vars.LIM_NINEZ }}
+	LIM_ADOLESCENCIA: ${{ vars.ADOLESCENCIA }}
+	LIM_ADULTO_JOVEN: ${{ vars.ADULTO_JOVEN }}
+	LIM_ADULTO: ${{ vars.LIM_ADULTO }}
+	
+
+jobs:
+  calcular_edad:
+    name: compara_edad
+    runs-on: ubuntu-latest
+	anio_actual:2025
+    steps:
+      - name: calcula_edad
+        run: |
+          echo "restando anio_actual - anio_nacimiento"
+          RESULTADO=$((anio_actual - anio_nacimiento))
+          echo "Resultado=$RESULTADO" >> $GITHUB_ENV
+
+ Calcular_etapa:
+    name: Calcular etapa de la persona
+    needs:  calcular_edad
+    runs-on: ubuntu-latest
+    steps:
+      - name: Mostrar mensaje según resultado
+        run: |
+          if [ "$RESULTADO" -le LIM_NINEZ ]; then
+            echo "✅ La persona es un niño: $RESULTADO"
+          
+		  else
+            if [ "$RESULTADO" -le LIM_ADOLESCENCIA ]; then
+            echo "✅ La persona es un adolecente: $RESULTADO"
+			
+		   else
+            if [ "$RESULTADO" -le LIM_ADULTO_JOVEN ]; then
+            echo "✅ La persona es un adutlo joven: $RESULTADO"
+			
+			else
+            if [ "$RESULTADO" -le LIM_ADULTO ]; then
+            echo "✅ La persona es un anciano(a): $RESULTADO"
+		 	    
+        env:
+          RESULTADO: ${{ env.RESULTADO }}

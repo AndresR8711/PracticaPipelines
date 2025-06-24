@@ -1,20 +1,21 @@
+
 name: Etapas de la vida
 
 on:
-  workflow_dispatch:
-    inputs:
-      anio_nacimiento:
-        description: 'Año de nacimiento'
-        required: true
-        default: '1996'
-      mes_nacimiento:
-        description: 'Mes de nacimiento'
-        required: true
-        default: '9'
-      dia_nacimiento:
-        description: 'Día de nacimiento'
-        required: true
-        default: '10'
+  workflow_dispatch:
+    inputs:
+      anio_nacimiento:
+        description: 'Año de nacimiento'
+        required: true
+        default: '1996'
+      mes_nacimiento:
+        description: 'Mes de nacimiento'
+        required: true
+        default: '9'
+      dia_nacimiento:
+        description: 'Día de nacimiento'
+        required: true
+        default: '10'
 
 env:
   LIM_NINEZ: ${{ vars.LIM_NINEZ }}

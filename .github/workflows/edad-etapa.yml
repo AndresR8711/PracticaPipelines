@@ -52,6 +52,11 @@ jobs:
     name: Clasificar Etapa de Vida
     needs: calcular-edad
     runs-on: ubuntu-latest
+    env:
+      LIM_NINEZ: ${{ env.LIM_NINEZ }}
+      LIM_ADOLESCENCIA: ${{ env.LIM_ADOLESCENCIA }}
+      LIM_ADULTO_JOVEN: ${{ env.LIM_ADULTO_JOVEN }}
+      LIM_ADULTO: ${{ env.LIM_ADULTO }}
 
     steps:
       - name: Clasificar según edad

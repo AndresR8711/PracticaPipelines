@@ -1,0 +1,86 @@
+name: etapas3
+on:
+  workflow_dispatch:
+    inputs:
+      dia:
+        description: 'Día de nacimiento'
+        required: true
+        type: string
+      mes:
+        description: 'Mes de nacimiento'
+        required: true
+        type: string
+      anio:
+        description: 'Año de nacimiento'
+        required: true
+        type: string
+
+env:
+  LIM_NINEZ: 13
+  LIM_ADOLESCENCIA: 17
+  LIM_ADULTO_JOVEN: 35
+  LIM_ADULTO: 64
+
+jobs:
+  calcular-edad:
+    name: Calcular Edad
+    runs-on: ubuntu-latest
+    outputs:
+      edad_formateada: ${{ steps.edad.outputs.edad_formateada }}
+      edad_anios: ${{ steps.edad.outputs.edad_anios }}
+
+    steps:
+      - name: Calcular edad exacta
+        id: edad
+        run: |
+          echo "Fecha de nacimiento: ${{ github.event.inputs.dia }}-${{ github.event.inputs.mes }}-${{ github.event.inputs.anio }}"
+
+          nacimiento=$(date -d "${{ github.event.inputs.anio }}-${{ github.event.inputs.mes }}-${{ github.event.inputs.dia }}" +%Y-%m-%d)
+          hoy=$(date +%Y-%m-%d)
+
+          años=$(($(date -d "$hoy" +%Y) - $(date -d "$nacimiento" +%Y)))
+          meses=$(($(date -d "$hoy" +%m) - $(date -d "$nacimiento" +%m)))
+          días=$(($(date -d "$hoy" +%d) - $(date -d "$nacimiento" +%d)))
+
+          if [ $días -lt 0 ]; then
+            meses=$((meses - 1))
+            días=$((días + 30))
+          fi
+
+          if [ $meses -lt 0 ]; then
+            años=$((años - 1))
+            meses=$((meses + 12))
+          fi
+
+          edad_formateada="$años años, $meses meses, $días días"
+          echo "Edad calculada: $edad_formateada"
+
+          echo "edad_formateada=$edad_formateada" >> $GITHUB_OUTPUT
+          echo "edad_anios=$años" >> $GITHUB_OUTPUT
+
+  clasificar-etapa:
+    name: Clasificar Etapa de Vida
+    needs: calcular-edad
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clasificar según edad
+        run: |
+          edad=${{ needs.calcular-edad.outputs.edad_anios }}
+          edad_formateada="${{ needs.calcular-edad.outputs.edad_formateada }}"
+
+          echo "Edad: $edad_formateada ($edad años)"
+
+          if [ "$edad" -le "$LIM_NINEZ" ]; then
+            etapa="Niñez"
+          elif [ "$edad" -le "$LIM_ADOLESCENCIA" ]; then
+            etapa="Adolescencia"
+          elif [ "$edad" -le "$LIM_ADULTO_JOVEN" ]; then
+            etapa="Adulto Joven"
+          elif [ "$edad" -le "$LIM_ADULTO" ]; then
+            etapa="Adulto"
+          else
+            etapa="Adulto Mayor"
+          fi
+
+          echo "Etapa de vida: $etapa"

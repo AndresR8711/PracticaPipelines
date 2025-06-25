@@ -25,7 +25,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       edad_formato: ${{ steps.calcular.outputs.edad }}
-      años: ${{ steps.calcular.outputs.anios }}
+      anios: ${{ steps.calcular.outputs.anios }}
     steps:
       - name: Calcular edad
         id: calcular
@@ -34,7 +34,7 @@ jobs:
           hoy=$(date +%Y-%m-%d)
 
           # Cálculo de diferencia
-          años=$(($(date -d "$hoy" +%Y) - $(date -d "$nacimiento" +%Y)))
+          anios=$(($(date -d "$hoy" +%Y) - $(date -d "$nacimiento" +%Y)))
           meses=$(($(date -d "$hoy" +%m) - $(date -d "$nacimiento" +%m)))
           dias=$(($(date -d "$hoy" +%d) - $(date -d "$nacimiento" +%d)))
 
@@ -43,15 +43,15 @@ jobs:
             dias=$((dias + 30))
           fi
           if [ "$meses" -lt 0 ]; then
-            años=$((años - 1))
+            anios=$((anios - 1))
             meses=$((meses + 12))
           fi
 
-          edad="${años} años, ${meses} meses, ${dias} días"
+          edad="${anios} anios, ${meses} meses, ${dias} días"
           echo "Edad calculada: $edad"
 
           echo "edad=$edad" >> $GITHUB_OUTPUT
-          echo "anios=$años" >> $GITHUB_OUTPUT
+          echo "anios=$anios" >> $GITHUB_OUTPUT
 
   clasificar-etapa:
     name: Clasificar Etapa de Vida
@@ -61,15 +61,15 @@ jobs:
       - name: Clasificación por edad
         run: |
           edad="${{ needs.calcular-edad.outputs.edad_formato }}"
-          años=${{ needs.calcular-edad.outputs.años }}
+          anios=${{ needs.calcular-edad.outputs.anios }}
 
-          if [ "$años" -le "${{ env.LIM_NINEZ }}" ]; then
+          if [ "$anios" -le "${{ env.LIM_NINEZ }}" ]; then
             etapa="Niñez"
-          elif [ "$años" -le "${{ env.LIM_ADOLESCENCIA }}" ]; then
+          elif [ "$anios" -le "${{ env.LIM_ADOLESCENCIA }}" ]; then
             etapa="Adolescencia"
-          elif [ "$años" -le "${{ env.LIM_ADULTO_JOVEN }}" ]; then
+          elif [ "$anios" -le "${{ env.LIM_ADULTO_JOVEN }}" ]; then
             etapa="Adultez Joven"
-          elif [ "$años" -le "${{ env.LIM_ADULTO }}" ]; then
+          elif [ "$anios" -le "${{ env.LIM_ADULTO }}" ]; then
             etapa="Adultez"
           else
             etapa="Vejez"

@@ -1,5 +1,4 @@
 name: Calcular Edad y Clasificar Etapa de Vida
-
 on:
   workflow_dispatch:
     inputs:
@@ -15,7 +14,6 @@ on:
         description: 'Año de nacimiento'
         required: true
         type: string
-
 env:
   LIM_NINEZ: 13
   LIM_ADOLESCENCIA: 17
@@ -29,7 +27,6 @@ jobs:
     outputs:
       edad_formateada: ${{ steps.edad.outputs.edad_formateada }}
       edad_anios: ${{ steps.edad.outputs.edad_anios }}
-
     steps:
       - name: Calcular edad exacta
         id: edad
@@ -47,7 +44,6 @@ jobs:
           formatted="${years} años, ${months} meses, ${days} días"
 
           echo "Edad calculada: $formatted"
-
           echo "edad_formateada=$formatted" >> $GITHUB_OUTPUT
           echo "edad_anios=$years" >> $GITHUB_OUTPUT
 

@@ -1,36 +1,19 @@
-name: Suma con condiciones
+name: Suma de números
 
 on:
-  push:
-    branches:
-      - 'test/**'
-
-env:
-  NUMERO1: ${{ vars.NUMERO1 }}
-  NUMERO2: ${{ vars.NUMERO2 }}
+  workflow_dispatch: # Permite ejecutarlo manualmente desde GitHub
 
 jobs:
-  sumar_numeros:
-    name: Sumar dos números
+  sumar:
     runs-on: ubuntu-latest
     steps:
-      - name: Ejecutar suma
+      - name: Definir variables
         run: |
-          echo "Sumando $NUMERO1 + $NUMERO2"
-          RESULTADO=$((NUMERO1 + NUMERO2))
-          echo "Resultado=$RESULTADO" >> $GITHUB_ENV
+          NUM1=5
+          NUM2=7
+          echo "El primer número es $NUM1"
+          echo "El segundo número es $NUM2"
+          echo "RESULTADO=$((NUM1 + NUM2))" >> $GITHUB_ENV
 
-  evaluar_resultado:
-    name: Evaluar resultado de la suma
-    needs: sumar_numeros
-    runs-on: ubuntu-latest
-    steps:
-      - name: Mostrar mensaje según resultado
-        run: |
-          if [ "$RESULTADO" -gt 11 ]; then
-            echo "✅ El resultado es mayor a 11: $RESULTADO"
-          else
-            echo "ℹ️ El resultado es menor o igual a 10: $RESULTADO"
-          fi
-        env:
-          RESULTADO: ${{ env.RESULTADO }}
+      - name: Mostrar resultado
+        run: echo "La suma es $RESULTADO"

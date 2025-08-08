@@ -17,18 +17,19 @@ jobs:
 
       - name: Mostrar resultado
         run: echo "La suma es $RESULTADO"
-Jobs:
   restar:
-  
+    runs-on: ubuntu-latest
     steps:
-      - name: definir varables
-        run: |
+       - name: definir varables
+         run: |
           NUM3=25
           NUM4=10
           echo "El primer número es $NUM3"
           echo "El segundo número es $NUM4"
           echo "RESTA=$((NUM3 - NUM4))" >> $GITHUB_ENV
 
-     - name: Mostrar resultados
-        run: echo " la resta es $RESTA"
+       - name: Mostrar el resultado
+         run: echo " la resta es $RESTA"
+
+
 

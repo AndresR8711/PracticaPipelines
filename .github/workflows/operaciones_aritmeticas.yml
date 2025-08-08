@@ -17,6 +17,7 @@ jobs:
 
       - name: Mostrar resultado
         run: echo "La suma es $RESULTADO"
+<<<<<<< HEAD:.github/workflows/operaciones_aritmeticas.yml
 
 
 Jobs:
@@ -32,4 +33,21 @@ Jobs:
 
       -name: Mostrar resultados
       run: echo  " el resultado de la resta es $RESTA"
+=======
+  restar:
+    runs-on: ubuntu-latest
+    steps:
+       - name: definir varables
+         run: |
+          NUM3=25
+          NUM4=10
+          echo "El primer número es $NUM3"
+          echo "El segundo número es $NUM4"
+          echo "RESTA=$((NUM3 - NUM4))" >> $GITHUB_ENV
+
+       - name: Mostrar el resultado
+         run: echo " la resta es $RESTA"
+
+
+>>>>>>> 2c40dcd5156595376e641be04e7537f3f9ce30d5:.github/workflows/suma.yml
 

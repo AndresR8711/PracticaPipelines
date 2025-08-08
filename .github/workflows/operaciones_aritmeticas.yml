@@ -1,7 +1,6 @@
-name: Suma de números
-
+name: Operaciones Aritméticas
 on:
-  workflow_dispatch: # Permite ejecutarlo manualmente desde GitHub
+  workflow_dispatch: # Permite ejecutarlo manualmente
 
 jobs:
   sumar:
@@ -17,37 +16,30 @@ jobs:
 
       - name: Mostrar resultado
         run: echo "La suma es $RESULTADO"
-<<<<<<< HEAD:.github/workflows/operaciones_aritmeticas.yml
 
-
-Jobs:
   restar:
-    
     runs-on: ubuntu-latest
     steps:
-      - name: definir varables
+      - name: Definir variables
         run: |
-          NUM3=2
-          NUM4=25
-           echo "El resultado de la RESTA=$((NUM3 + NUM4))" >> $GITHUB_ENV
-
-      -name: Mostrar resultados
-      run: echo  " el resultado de la resta es $RESTA"
-=======
-  restar:
-    runs-on: ubuntu-latest
-    steps:
-       - name: definir varables
-         run: |
           NUM3=25
-          NUM4=10
+          NUM4=2
           echo "El primer número es $NUM3"
           echo "El segundo número es $NUM4"
           echo "RESTA=$((NUM3 - NUM4))" >> $GITHUB_ENV
 
-       - name: Mostrar el resultado
-         run: echo " la resta es $RESTA"
+      - name: Mostrar resultado
+        run: echo "La resta es $RESTA"
+  multiplicar:
+    runs-on: ubuntu-latest  
+    steps:
+      - name: Definir variables
+        run: |
+          NUM5=3
+          NUM6=4
+          echo "El primer número es $NUM5"
+          echo "El segundo número es $NUM6"
+          echo "MULTIPLICACION=$((NUM5 * NUM6))" >> $GITHUB_ENV
 
-
->>>>>>> 2c40dcd5156595376e641be04e7537f3f9ce30d5:.github/workflows/suma.yml
-
+      - name: Mostrar resultado
+        run: echo "La multiplicación es $MULTIPLICACION"

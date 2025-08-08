@@ -17,3 +17,17 @@ jobs:
 
       - name: Mostrar resultado
         run: echo "La suma es $RESULTADO"
+Jobs:
+  restar:
+    
+    runs-on: ubuntu-latest
+    steps:
+      - name: definir varables
+        run: |
+          NUM3=2
+          NUM4=25
+           echo "El resultado de la RESTA=$((NUM3 + NUM4))" >> $GITHUB_ENV
+
+      -name: Mostrar resultados
+     run: echo  " el resultado de la resta es $RESTA"
+

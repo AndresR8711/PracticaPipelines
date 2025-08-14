@@ -5,24 +5,28 @@ on:
 jobs:
   definir_variables:
     runs-on: ubuntu-latest
+    env:
+      NUM1: ${{ vars.NUM1 }}
+      NUM2: ${{ vars.NUM2 }}
     steps:
-      - name: Definir números 
+      - name: Mostrar números
         run: |
-          echo "NUM1=$NUM1" >> $GITHUB_ENV
-          echo "NUM2=$NUM2" >> $GITHUB_ENV
+          echo "NUM1=$NUM1"
+          echo "NUM2=$NUM2"
 
   sumar:
     runs-on: ubuntu-latest
     needs: definir_variables
+    env:
+      NUM1: ${{ vars.NUM1 }}
+      NUM2: ${{ vars.NUM2 }}
     steps:
-      - name: Calcular suma y comprar resultado
+      - name: Calcular suma y comparar resultado
         run: |
           RESULTADO=$((NUM1 + NUM2))
-          echo "RESULTADO=$RESULTADO" >> $GITHUB_ENV
+          echo "RESULTADO=$RESULTADO"
           if [ $RESULTADO -gt 10 ]; then
             echo "La suma es mayor que 10"
           else
             echo "La suma es menor o igual a 10"
           fi
-      - name: Mostrar resultado
-        run: echo "La suma es $RESULTADO"

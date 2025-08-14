@@ -3,8 +3,7 @@ name: Suma con variables de entorno
 on:
   push:
     branches:
-      - 'main/*' # Solo ejecuta si la rama empieza por 'main/'
-
+      - 'test/*' # Solo ejecuta si la rama empieza por 'test/'
 jobs:
   definir_variables:
     runs-on: ubuntu-latest

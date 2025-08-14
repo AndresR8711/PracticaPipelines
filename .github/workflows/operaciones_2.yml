@@ -1,9 +1,7 @@
 name: Suma con variables de entorno
 
 on:
-  push:
-    branches:
-      - 'test*' # Solo ejecuta si la rama empieza por 'test/'
+  workflow_dispatch: # Permite ejecutarlo manualmente
 jobs:
   definir_variables:
     runs-on: ubuntu-latest

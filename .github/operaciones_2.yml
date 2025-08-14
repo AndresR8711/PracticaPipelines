@@ -1,0 +1,31 @@
+name: Suma con variables de entorno
+
+on:
+  push:
+    branches:
+      - 'test/*' # Solo ejecuta si la rama empieza por 'test/'
+
+jobs:
+  definir_variables:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Definir números
+        run: |
+          echo "NUM1=$NUM1" >> $GITHUB_ENV
+          echo "NUM2=$NUM2" >> $GITHUB_ENV
+
+  sumar:
+    runs-on: ubuntu-latest
+    needs: definir_variables
+    steps:
+      - name: Calcular suma
+        run: |
+          RESULTADO=$((NUM1 + NUM2))
+          echo "RESULTADO=$RESULTADO" >> $GITHUB_ENV
+          if [ $RESULTADO -gt 10 ]; then
+            echo "La suma es mayor que 10"
+          else
+            echo "La suma es menor o igual a 10"
+          fi
+      - name: Mostrar resultado
+        run: echo "La suma es $RESULTADO"

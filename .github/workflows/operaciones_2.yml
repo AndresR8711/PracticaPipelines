@@ -1,7 +1,9 @@
 name: Suma con variables de entorno
 
 on:
-  workflow_dispatch: # Permite ejecutarlo manualmente
+  push:
+    branches:
+      - main
 jobs:
   definir_variables:
     runs-on: ubuntu-latest
